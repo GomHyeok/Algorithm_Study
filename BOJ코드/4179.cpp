@@ -49,17 +49,26 @@ int main() {
             int dy = y + ny[i];
 
             if(dx < 0 || dy < 0 || dx >= r || dy >= c) continue;
-            if(dist[dx][dy] > 0 || board[dx][dy] == '#') continue;
+            if(dist[dx][dy] >= 0 || board[dx][dy] == '#') continue;
 
             dist[dx][dy] = dist[x][y] + 1;
             fire.push({dx, dy});
         }
     }
 
+    // for(int i=0; i<r; i++) {
+    //     for(int j=0; j<c; j++) {
+    //         cout<<dist[i][j]<<" ";
+    //     }
+    //     cout<<endl;
+    // }
+
     while(!pos.empty()) {
         int x  = pos.front().first.first;
         int y  = pos.front().first.second;
         int cnt = pos.front().second;
+
+        // cout<<x<<" "<<y<<" "<<cnt<<endl;
 
         pos.pop();
 
