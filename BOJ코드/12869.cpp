@@ -43,10 +43,12 @@ void attack(int a, int b, int c, int count) {
 
     if(hp[a][b][c] <= count && hp[a][b][c] != 0) return;
 
-    attack(a - 9, b -3, c -1, count + 1);
-    attack(a - 9, b -1, c -3, count + 1);
-    attack(a - 3, b -9, c -1, count + 1);
-    attack(a - 1, b -9, c -3, count + 1);
-    attack(a - 3, b -1, c - 9, count + 1);
+    hp[a][b][c] = count;
+
+    attack(a - 9, b - 3, c - 1, count + 1);
+    attack(a - 9, b - 1, c - 3, count + 1);
+    attack(a - 3, b - 9, c - 1, count + 1);
+    attack(a - 1, b - 9, c - 3, count + 1);
+    attack(a - 3, b - 1, c - 9, count + 1);
     attack(a - 1, b - 3, c - 9, count + 1);
 }
