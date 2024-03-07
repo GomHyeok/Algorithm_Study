@@ -5,6 +5,10 @@
         "queue": "cpp",
         "ostream": "cpp",
         "vector": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "atomic": "cpp",
+        "bitset": "cpp",
+        "tuple": "cpp",
+        "type_traits": "cpp"
     }
 }
