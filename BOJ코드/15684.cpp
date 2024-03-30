@@ -30,6 +30,8 @@ void dfs(int max_val, int depth) {
             cout<<max_val<<endl;
             exit(0);
         }
+
+        return;
     }
 
     for(int i=1; i<n; i++) {
