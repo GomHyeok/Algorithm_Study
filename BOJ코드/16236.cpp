@@ -8,7 +8,7 @@ int dx[] = {0, -1, 1, 0}; // 상좌우하
 int dy[] = {-1, 0, 0, 1};
 int bx, by;
 int result = 0; // 총 걸린 시간
-int count = 0; // 물고기 먹은 횟수
+int cnt = 0; // 물고기 먹은 횟수
 int sz = 2; // 상어 사이즈
 bool stop = false; // 먹을 물고기가 없는 경우
 bool eat = false; // 한 마리를 먹은 경우
@@ -70,11 +70,11 @@ int main(){
         bfs(bx, by, visit, sz); // 한 마리 먹을때까지 이동
         if(eat){ // 먹었을 경우
             eat = false; 
-            count += 1; // 현재 크기에서 물고기 먹은 횟수 증가
+            cnt += 1; // 현재 크기에서 물고기 먹은 횟수 증가
             map[by][bx] = 0; // 먹은 물고기 삭제
-            if(count == sz){ // 상어 크기가 증가하는 경우
+            if(cnt == sz){ // 상어 크기가 증가하는 경우
                 sz += 1; // 상어 사이즈 +1
-                count = 0; //현재 크기에서 물고기 먹은 횟수 초기화
+                cnt = 0; //현재 크기에서 물고기 먹은 횟수 초기화
             }
         }else{ // 한 마리도 못먹는 경우
             stop = true; // 엄마 상어에게 도움 요청해야함.
