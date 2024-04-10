@@ -38,7 +38,7 @@ int main() {
 
     dfs(root);
 
-    cout<<answer<<endl;
+    cout<<answer<<"\n";
 
 }
 
