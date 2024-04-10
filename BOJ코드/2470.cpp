@@ -44,5 +44,5 @@ int main() {
         else right--;
     }
 
-    cout<<answer[0]<<" "<<answer[1]<<endl;
+    cout<<answer[0]<<" "<<answer[1]<<"\n";
 }
