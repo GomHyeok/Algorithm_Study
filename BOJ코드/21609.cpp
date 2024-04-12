@@ -14,10 +14,10 @@ int dy[4] = {0, 0, 1, -1};
 long long answer;
 
 bool make_group();
-bool compare(pair<pair<int, int>, pair<int, int>> a, pair<pair<int, int>, pair<int, int>> b);
 void gravity();
 void rotation();
 void dfs(int x, int y, int cnt, int value);
+void print_board();
 
 int main() {
     ios_base::sync_with_stdio(false);
@@ -40,7 +40,11 @@ int main() {
     while(true) {
         if(!make_group()) break;
         gravity();
+        rotation();
+        gravity();
     }
+
+    cout<<answer<<endl;
 
 }
 
@@ -186,5 +190,32 @@ void gravity() {
                 x++;
             }
         }
+    }
+}
+
+void rotation() {
+    vector<vector<int>> input;
+
+    for(int i=n-1; i>=0; i--) {
+        vector<int> temp;
+        for(int j=0; j<n; j++) {
+            temp.push_back(board[j][i]);
+        }
+        input.push_back(temp);
+    }
+
+    for(int i=0; i<n; i++) {
+        for(int j=0; j<n; j++) {
+            board[i][j] = input[i][j];
+        }
+    }
+}
+
+void print_board() {
+    for(int i=0; i<n; i++) {
+        for(int j=0; j<n; j++) {
+            cout<<board[i][j]<<" ";
+        }
+        cout<<endl;
     }
 }
