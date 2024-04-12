@@ -169,15 +169,6 @@ bool make_group() {
         }
     }
 
-    cout<<"before"<<endl;
-
-    for(int i=0; i<n; i++) {
-        for(int j=0; j<n; j++) {
-            cout<<board[i][j]<<" ";
-        }
-        cout<<endl;
-    }
-
     return true;
 }
 
@@ -186,6 +177,7 @@ void gravity() {
         for(int j = 0; j <n; j++) {
             int x = i;
             int y = j;
+            if(board[i][j] == -1) continue;
             while(1) {
                 if(board[x+1][y] != BLOCK) break;
 
@@ -194,14 +186,5 @@ void gravity() {
                 x++;
             }
         }
-    }
-
-    cout<<"after"<<endl;
-
-    for(int i=0; i<n; i++) {
-        for(int j=0; j<n; j++) {
-            cout<<board[i][j]<<" ";
-        }
-        cout<<endl;
     }
 }
