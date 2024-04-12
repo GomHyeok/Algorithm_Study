@@ -18,6 +18,7 @@ void gravity();
 void rotation();
 void dfs(int x, int y, int cnt, int value);
 void print_board();
+bool compare(pair<pair<int, int>, pair<int, int>> a, pair<pair<int, int>, pair<int, int>> b);
 
 int main() {
     ios_base::sync_with_stdio(false);
