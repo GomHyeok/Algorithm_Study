@@ -15,6 +15,7 @@ int main() {
     cin.tie(0);
     cout.tie(0);
     long long endTime;
+    priority_queue<int, vector<int>, greater<int>> pq;
     cin>>n;
 
     for(int i=0; i<n; i++) {
@@ -25,13 +26,15 @@ int main() {
 
     sort(classes.begin(), classes.end());
 
-    answer++;
-    endTime = classes[0].second;
-
+    pq.push(classes[0].second);
     for(int i=1; i<n; i++) {
-        if(classes[i].first > endTime) answer++;
-        else if(classes[i].second > endTime) endTime = classes[i].second;
+        if(classes[i].first >= pq.top()) {
+            pq.pop();
+            pq.push(classes[i].second);
+        } else {
+            pq.push(classes[i].second);
+        }
     }
 
-    cout<<answer<<endl;
+    cout<<pq.size()<<endl;
 }
