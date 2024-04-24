@@ -21,6 +21,7 @@
         "set": "cpp",
         "string_view": "cpp",
         "unordered_map": "cpp",
-        "stack": "cpp"
+        "stack": "cpp",
+        "iosfwd": "cpp"
     }
 }
