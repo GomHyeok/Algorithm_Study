@@ -9,45 +9,41 @@ using namespace std;
 
 string expression;
 string answer;
+stack<char> operation;
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(0);
     cout.tie(0);
-    int pos = 0;
-
-    stack<pair<char, int>> st;
-
+    
     cin>>expression;
 
     for(int i=0; i<expression.size(); i++) {
-        cout<<answer<<" "<<expression[i]<<endl;
-        if(expression[i] == '(') {
-            pos = 0;
+        if(expression[i] == '(') operation.push(expression[i]);
+        else if(expression[i] == '*' || expression[i] == '/') {
+            while(!operation.empty() && (operation.top() == '*' || operation.top() == '/')){
+                answer = answer + operation.top();
+                operation.pop();
+            }
+            operation.push(expression[i]);
+        } else if(expression[i] == '+' || expression[i] == '-') {
+            while(!operation.empty() && operation.top() != '('){
+                answer = answer + operation.top();
+                operation.pop();
+            }
+            operation.push(expression[i]);
         } else if(expression[i] == ')') {
-            while(st.top().second != 0) {
-                answer += st.top().first;
-                st.pop();
+            while(!operation.empty() && operation.top() != '('){
+                answer = answer + operation.top();
+                operation.pop();
             }
-            answer = answer + st.top().first;
-            st.pop();
-            pos = st.top().second + 1;
-        } else if(expression[i] >= 'A' && expression[i] <= 'Z') {
-            answer = answer + expression[i];
-        } else {
-            if(expression[i] == '*' || expression[i] == '/') {
-                while(st.top().first != '*' && st.top().first != '/'){
-                    
-                }
-            }
-            st.push({expression[i], pos});
-            pos++;
-        }
+            operation.pop();
+        } else answer = answer + expression[i];
     }
 
-    while(!st.empty()) {
-        answer = answer + st.top().first;
-        st.pop();
+    while(!operation.empty()) {
+        answer = answer + operation.top();
+        operation.pop();
     }
 
     cout<<answer<<endl;
