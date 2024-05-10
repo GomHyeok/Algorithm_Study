@@ -22,6 +22,7 @@
         "string_view": "cpp",
         "unordered_map": "cpp",
         "stack": "cpp",
-        "iosfwd": "cpp"
+        "iosfwd": "cpp",
+        "istream": "cpp"
     }
 }
