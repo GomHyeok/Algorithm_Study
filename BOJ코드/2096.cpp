@@ -15,11 +15,14 @@ using namespace std;
  
 int main(void)
 {
-    int n, maxDP[3] = { 0,0,0 }, minDP[3] = { 0,0,0 }, input[3], temp_0, temp_2;
+    int n, maxDP[3] = { 0,0,0 };
+    int minDP[3] = { 0,0,0 };
+    int input[3];
+    int temp_0, temp_2;
     scanf("%d", &n);
     scanf("%d %d %d", &maxDP[0], &maxDP[1], &maxDP[2]);
+    
     minDP[0] = maxDP[0]; minDP[1] = maxDP[1]; minDP[2] = maxDP[2];
- 
  
     for (int i = 1; i < n; i++) {
         scanf("%d %d %d", &input[0], &input[1], &input[2]);
