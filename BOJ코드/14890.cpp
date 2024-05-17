@@ -44,7 +44,7 @@ void checking(int road[100][100]) {
             if(road[i][h] == road[i][h+1] - 1){
                 int cur_hight = road[i][h];
                 for (int k = h; k > h - l; k--){
-                    if(k < 0 || road[i][k] != cur_hight || slope[k]){
+                    if(k < 0 || road[i][k] != cur_hight || slope[k]){//경사로 2개 겹쳐서 안되는 경우
                         // L만큼의 여유와 경사로 설치 여부 확인
                         possible = false;
                         break;
