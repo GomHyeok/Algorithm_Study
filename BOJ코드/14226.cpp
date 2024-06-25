@@ -21,6 +21,7 @@ int main() {
 
     visited[1][0] = true;
 
+    //시간 순으로 가기 때문에 q를 사용(pq는 안되나..?)
     while(!q.empty()) {
         int num = q.front().first.first;
         int time = q.front().first.second;
