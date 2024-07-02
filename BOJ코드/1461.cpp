@@ -39,7 +39,7 @@ int main() {
         answer += abs(books[i] * 2); // 음수인 책들
     }
 
-    answer -= max(abs(books[0]), abs(books[n-1]));
+    answer -= max(abs(books[0]), abs(books[n-1])); //어느 방향으로 먼저 갈것인가
 
     cout<<answer<<endl;
 
