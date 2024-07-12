@@ -63,7 +63,7 @@ int main(int argc, char** argv) {
         }
 
         for(int i=1; i<n; i++) {
-            for(int j=m*4-1; j>=0; j--) {
+            for(int j=m*4-1; j>=0; j--) { 
                 int ratio[3] = {0,0,0};
 
                 if(board[i][j] == 1 && board[i-1][j] == 0) {
