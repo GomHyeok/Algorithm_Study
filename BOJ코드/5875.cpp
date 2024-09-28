@@ -18,7 +18,8 @@ int answer = 0;
 //(의 경우는 본임 포함 본인 뒤쪽 것이 변하면 가능
 //)의 경우는 본인 포함 앞에 것이 변하면 가능
 
-int Rpoint() {
+int Rpoint() {//) 가 더 많은 경우
+    //앞에서 부터 ( 스택에 넣고 어느 인덱스에서 문제인지 확인함
     stack<int> leftPos;
 
     for(int i=0; i<input.size(); i++) {
@@ -34,7 +35,8 @@ int Rpoint() {
     return -1;
 }
 
-int LPoint() {
+int LPoint() {//( 가 더 많은 경우
+    //뒤에서 부터 )를 스택에 넣고 어느 지점이 문제인지 확인함
     stack<int> rightPos;
 
     for(int i=input.size() - 1; i>=0; i--) {
@@ -57,12 +59,13 @@ int main() {
 
     cin>>input;
 
+    //괄호의 개수가 홀수개면 무조건 이상한 괄호임
     if(input.length() % 2) {
         cout<<0<<endl;
         return 0;
     }
 
-
+    //)과 (구분하여 인덱스 값 저장
     for(int i=0; i<input.size(); i++) {
         if(input[i] == ')') rights.push_back(i);
         else lefts.push_back(i);
@@ -71,12 +74,14 @@ int main() {
     int dif = rights.size() - lefts.size();
     if(dif == -2) { // '(' 가 더 많은 경우
         int pos = LPoint();
+        //확인된 지점 부터 뒷부분의 ( 개수 
         for(int i=lefts.size()-1 ; i>=0; i--) {
             answer++;
             if(pos == lefts[i]) break;
         }
     } else if(dif == 2) {
         int pos = Rpoint();
+        //확인된 지점 부터 앞부분의 ) 개수
         for(int i=0; i<rights.size(); i++) {
             answer++;
             if(pos == rights[i]) break;
