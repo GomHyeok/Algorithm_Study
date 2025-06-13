@@ -50,7 +50,7 @@ int main() {
 
     cout<<1<<"\n"<<s<<"\n";
 
-    for(int i=1; i<=n; i++) {
+    for(int i=1; i<=n+s; i++) {
         cout<<boxs[i].size();
 
         while (!boxs[i].empty())
