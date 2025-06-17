@@ -1,95 +1,68 @@
 #include <iostream>
-#include <stack>
-#include <vector>
 #include <algorithm>
-#include <queue>
-#include <cstring>
+#include <vector>
 
 using namespace std;
 
-int testcase;
-
+//(100+1+ | 01)+
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(0);
     cout.tie(0);
 
+    int testcase;
+
     cin>>testcase;
 
-    while(testcase) {
+    for(int t=1; t<=testcase; t++) {
         string st;
-        int pos = 0;
-        bool flag = false;
+        string answer = "YES";
+        int idx = 0;
+
         cin>>st;
-        
-        while(pos < st.size()) {
-            if(st[pos] == '1') {
-                if(pos+1 < st.size() && st[pos+1] == '0') {
-                    pos++;
-                    int count = 0;
-                    while(pos < st.size() && st[pos] == '0') {
-                        pos++;
-                        count++;
-                    }
-                    if(count < 2) {
-                        flag = true;
-                        break;
-                    }
 
-                    if(pos < st.size() && st[pos] != '1') {
-                        flag = true;
-                        break;
-                    } else if(pos >= st.size()) {
-                        flag = true;
-                        break;
-                    }
-                    while(pos < st.size() && st[pos] == '1') {
-                        pos++;
-                    }
-                } else {
-                    flag = true;
+        while(idx < st.size()) {
+            if(st[idx] == '0') {
+                if(idx + 1 >= st.size() || st[idx+1] == '0') {
+                    answer = "NO";
                     break;
                 }
-            }
-            else if(st[pos] == '0') {
-                if(pos-1 >= 0 && st[pos-1] == '1') {
-                    if(pos-2 >= 0 && st[pos-2] == '1') {
-                        pos--;
-                        continue;
-                    } else if(pos-2 >= 0 && st[pos-2] == '0') {
-                        if(pos+1 < st.size() && st[pos+1] != '1') {
-                            flag = true;
-                            break;
-                        } else {
-                            pos+=2;
-                            continue;
-                        }
-                    } else {
-                        flag = true;
+                idx += 2;
+            } else {
+                int nextOne = -1;
+                for(int i=idx+1; i < st.size(); i++) {
+                    if(st[i] == '1') {
+                        nextOne = i;
                         break;
                     }
                 }
-                else if(pos == 0){
-                    if(pos+1<st.size() && st[pos+1] != '1') {
-                        flag = true;
-                        break;
-                    } else {
-                        pos += 2;
-                        continue;
-                    }
-                }
-                else {
-                    flag = true;
+
+                if(nextOne - idx < 3 || nextOne < 0) {
+                    answer = "NO";
                     break;
                 }
+
+                int nextZero = -1;
+                for(int i=nextOne + 1; i<st.size(); i++) {
+                    if(st[i] == '0') {
+                        nextZero = i;
+                        break;
+                    }
+                }
+                //0뒤에 아무것도 안오는 경우 없음
+                if(nextZero == st.size() -1) {
+                    answer = "NO";
+                    break;
+                }
+                //0이 아에 없는 경우
+                if(nextZero == -1) break;
+                idx = nextZero;
+
+                //100이 반복인 경우
+                if(st[idx+1] == '0' && idx - nextOne > 1) idx--;
             }
         }
-        if(flag) {
-            cout<<"NO"<<endl;
-        } else {
-            cout<<"YES"<<endl;
-        }
-        testcase--;
+
+        cout<<answer<<"\n";
     }
-
 }
