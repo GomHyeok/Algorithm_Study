@@ -38,10 +38,10 @@ int main() {
         citys.push_back(num);
     }
 
-    past = parent[citys[0]];
+    past = find(citys[0]);
 
     for(int i=1; i<m; i++) {
-        int now = parent[citys[i]];
+        int now = find(citys[i]);
         if(past != now) {
             cout<<"NO"<<endl;
             return 0;
@@ -54,13 +54,14 @@ int main() {
 
 int find(int x) {
     if(parent[x] == x) return x;
-    
-    return parent[x] = find(parent[x]);
+
+    return find(parent[x]);
 }
 
 void union_find(int x, int y) {
-    x = find(x);
-    y = find(y);
-    if(x < y) parent[y] = x;
-    else parent[x] = y;
+    int parentX = find(x);
+    int parentY = find(y);
+
+    if(parentX > parentY) parent[parentX] = parentY;
+    else parent[parentY] = parentX;
 }
