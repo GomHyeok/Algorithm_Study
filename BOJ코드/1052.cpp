@@ -8,6 +8,7 @@
 using namespace std;
 
 long long n, k;
+long long answer;
 
 int main() {
     ios_base::sync_with_stdio(false);
@@ -23,14 +24,18 @@ int main() {
 
     while(1) {
         int cnt = 0;
-        int temp = n;
-        while(temp > 0) {
-            if(temp % 2 == 0) {
-                temp /= 2;
-            } else {
-                temp/=2;
-                cnt++;
-            }
+        int tmp = n;
+
+        while(tmp > 0) {
+            if(tmp%2 != 0) cnt++;
+            tmp /= 2;
         }
+
+        if(cnt <= k) break;
+
+        answer++;
+        n++;
     }
+
+    cout<<answer<<endl;
 }
