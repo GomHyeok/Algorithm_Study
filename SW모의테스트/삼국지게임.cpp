@@ -33,7 +33,7 @@ void init(int N, int mSoldier[25][25], char mMonarch[25][25][11])
         for(int j=0; j<N; j++) {
             allycnt++;
             string name = mMonarch[i][j];
-            Monarch monarch = {name, allycnt, i, j, mSoldier[i][j]};
+            Monarch monarch = {name, allycnt, i, j, mSoldier[i][j], nullptr};
             Ally ally = {monarch, monarch};
             allys[allycnt] = ally;
             enemy[allycnt] = {};
