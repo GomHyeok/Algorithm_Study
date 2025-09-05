@@ -83,82 +83,79 @@ int main()
 #include <set>
 #include <map>
 
-//start == end
-//8개 도로
-//반환 지점 = 도로 4개 사용하고
-//출발 도착 지점은 중건 지점으로 사용할 수 없다.
-
 using namespace std;
 
-map<int, pair<int, int>> road;
-map<int, int> roadLen;
-vector<map<int, int>> roads; // 최대 5지점
+map<int, vector<int>> spotRoad; //spot이 가진 road
+map<int, tuple<int, int, int>> roads;
 
-int answer = 0;
-int start = 0;
-
-void dfs(int spot, int cnt, int sum, set<int>& usedRoads);
-
-void init(int N)
-{
-    roads.resize(N + 1);
+void init(int N) {
+	spotRoad.clear();
+	roads.clear();
 }
 
-//최대 1000
-void addRoad(int K, int mID[], int mSpotA[], int mSpotB[], int mLen[])
-{
-    for(int i=0; i<K; i++) {
-        int a = mSpotA[i];
-        int b = mSpotB[i];
-        int id = mID[i];
-        int len = mLen[i];
+void addRoad(int K, int mID[], int mSpotA[], int mSpotB[], int mLen[]) {
+	for(int i=0; i<K; i++) {
+		spotRoad[mSpotA[i]].push_back(mID[i]);
+		spotRoad[mSpotB[i]].push_back(mID[i]);
+		roads[mID[i]] = make_tuple(mSpotA[i], mSpotB[i], mLen[i]);
+	}
+}
 
-        road[id] = {a, b};
-        roadLen[id] = len;
-        roads[a][b] = id;
-        roads[b][a] = id;
+void removeRoad(int mID) {
+	if(roads.find(mID) == roads.end()) return;
+    auto [a, b, len] = roads[mID];
+    roads.erase(mID);
+
+    auto &vec_a = spotRoad[a];
+    vec_a.erase(remove(vec_a.begin(), vec_a.end(), mID), vec_a.end());
+    auto &vec_b = spotRoad[b];
+    vec_b.erase(remove(vec_b.begin(), vec_b.end(), mID), vec_b.end());
+}
+
+int getLength(int mSpot) {
+	ap<int, vector<pair<int, vector<int>>>> return_spot; // spot -> list of (length, course)
+    
+    function<void(int, int, set<int>&, vector<int>&)> dfs = [&](int cur_spot, int sum_len, set<int>& visited, vector<int>& course) {
+        if(course.size() == 4) {
+            return_spot[cur_spot].push_back({sum_len, course});
+            return;
+        }
+
+        for(int road_id : spot_road[cur_spot]) {
+            auto [a, b, len] = roads[road_id];
+            int next_spot = a + b - cur_spot; // 양방향
+            if(visited.count(road_id) || next_spot == mSpot) continue;
+
+            course.push_back(road_id);
+            visited.insert(road_id);
+            dfs(next_spot, sum_len + len, visited, course);
+            course.pop_back();
+            visited.erase(road_id);
+        }
+    };
+
+    set<int> visited;
+    vector<int> course;
+    dfs(mSpot, 0, visited, course);
+
+    int max_length = -1;
+    for(auto &[s, vec] : return_spot) {
+        for(auto &[l1, c1] : vec) {
+            set<int> temp_visited(c1.begin(), c1.end());
+            for(auto &[l2, c2] : vec) {
+                if(l1 + l2 <= 42195) {
+                    bool flag = false;
+                    for(int road_id : c2) {
+                        if(temp_visited.count(road_id)) {
+                            flag = true;
+                            break;
+                        }
+                    }
+                    if(!flag) max_length = max(max_length, l1 + l2);
+                }
+            }
+        }
     }
-}
 
-//max 100
-void removeRoad(int mID)
-{
-    int a = road[mID].first;
-    int b = road[mID].second;
-    road.erase(mID);
-    roadLen.erase(mID);
-    roads[a].erase(b);
-    roads[b].erase(a);
-}
-
-//max 1000
-int getLength(int mSpot)
-{
-    answer = -1;
-    start = mSpot;
-    set<int> used;
-
-    dfs(mSpot, 0, 0, used);
-	return answer;
-}
-
-void dfs(int spot, int cnt, int sum, set<int>& usedRoads) {
-    if(sum >42195) { return; }
-    if(cnt >= 8) {
-        if(start == spot) { answer = max(sum, answer); }
-        return;
-    }
-
-    for(auto& it : roads[spot]) {
-        int nextSpot = it.first;
-        int roadID = it.second;
-        int len = roadLen[roadID];
-
-        if(usedRoads.count(roadID)) continue;
-        if(nextSpot == start && cnt < 7) continue;
-
-        usedRoads.insert(roadID);
-        dfs(nextSpot, cnt+1, sum + len, usedRoads);
-        usedRoads.erase(roadID);
-    }
+    return max_length;
 }
